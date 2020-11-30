@@ -5,6 +5,17 @@ const express = require('express');
 // creates an express application using the express module
 const server = express();
 
+
+//get list of users by usiong the db.js
+const listOfUsers = require('./data/db.js');
+server.get('/users',async (req, res) => {
+const users = await listOfUsers.find();
+if(!users){
+    return res.status(500).json("something went wrong. no users have been found");
+}else{
+    return res.status(200).json(users);
+}
+})
 // configures our server to execute a function for every GET request to "/"
 // the second argument passed to the .get() method is the "Route Handler Function"
 // the route handler function will run on every GET request to "/"
