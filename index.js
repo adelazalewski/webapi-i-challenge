@@ -4,7 +4,7 @@ const express = require('express');
 
 // creates an express application using the express module
 const server = express();
-
+server.use(express.json());
 
 //get list of users by usiong the db.js
 const listOfUsers = require('./data/db.js');
@@ -24,7 +24,7 @@ server.get('/', (req, res) => {
   // the .send() on the response object can be used to send a response to the client
   res.send('Hello World');
 });
-//define our endpoint
+//define our endpoint READ data
 server.get('/hobbits', (req, res) => {
     const hobbits = [
         {
@@ -39,7 +39,18 @@ server.get('/hobbits', (req, res) => {
 
     res.status(200).json(hobbits);
 })
-
+//create data
+server.post('/hobbits'), (req, res) => {
+    res.status(201).json({url: '/hobbits', operation: 'POST'});
+}
+//UPDATE data
+server.put('/hobbits', (req, res) => {
+    res.status(200).json({url: '/hobbits', operation: 'PUT'});
+})
+//DELETING DATA
+server.delete('/hobbits', (req, res) => {
+    res.sendStatus(204);
+})
 // once the server is fully configured we can have it "listen" for connections on a particular "port"
 // the callback function passed as the second argument will run once when the server starts
 server.listen(8000, () => console.log('API running on port 8000'));
